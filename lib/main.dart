@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'forgotPassword.dart'; 
 import 'createProfile.dart';
 import 'package:csia/errorPopUp.dart';
+import 'inAppIntro.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -115,13 +116,15 @@ class LoginScreen2 extends State<LoginScreen> {
                     email: nameControl.text, 
                     password: passControl.text
                   );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())); 
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'user-not-found') {
                     createError(context, 'No user was found under that name');
-                  } else if (e.code == 'email-already-in-use') {
+                  } else if (e.code == 'wrong-password') {
                     createError(context, 'Wrong password provided');
                   } else {
                     createError(context, e.code); 
+                    // comment
                   }
                 }
               },
