@@ -40,6 +40,9 @@ class createProfile extends StatelessWidget {
               child: TextField(
                 controller: controllerPassword,
                 decoration: const InputDecoration(labelText: 'Password', border: OutlineInputBorder()),
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
               )
             ),
             Container(
@@ -47,6 +50,9 @@ class createProfile extends StatelessWidget {
               child: TextField(
                 controller: controllerPassword2,
                 decoration: const InputDecoration(labelText: 'Confirm Password', border: OutlineInputBorder()),
+                obscureText: true,
+                enableSuggestions: false,
+                autocorrect: false,
               )
             ),
             TextButton(onPressed: () async {

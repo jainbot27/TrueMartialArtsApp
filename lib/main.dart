@@ -1,17 +1,23 @@
 import 'package:csia/createProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:csia/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'forgotPassword.dart'; 
-import 'createProfile.dart';
+import 'package:csia/forgotPassword.dart'; 
+import 'package:csia/createProfile.dart';
 import 'package:csia/errorPopUp.dart';
-import 'inAppIntro.dart';
+import 'package:csia/regUser.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:csia/admin.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
+bool admin = false; 
+FirebaseFirestore firestore = FirebaseFirestore.instance; 
+CollectionReference admins = firestore.collection('admins');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
+  // Firebase.initializeApp(); 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -81,6 +87,9 @@ class LoginScreen2 extends State<LoginScreen> {
           Container(
             padding: const EdgeInsets.all(10), 
             child: TextField(
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
               controller: passControl,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -116,7 +125,23 @@ class LoginScreen2 extends State<LoginScreen> {
                     email: nameControl.text, 
                     password: passControl.text
                   );
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())); 
+                  admins.add({
+                    'Email': nameControl.text 
+                  }); 
+                  bool isAdmin = false; 
+                  admins.get().then((QuerySnapshot querySnapshot) {
+                    querySnapshot.docs.forEach((doc) {
+                      if (doc.data().toString().contains('Email')) {
+                        if (doc['Email'] == nameControl.text) 
+                          isAdmin = true;
+                      }
+                    });
+                    if (isAdmin) {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => AdminScreen()));
+                    } else {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())); 
+                    }
+                  });
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'user-not-found') {
                     createError(context, 'No user was found under that name');
