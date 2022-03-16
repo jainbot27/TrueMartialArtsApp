@@ -9,11 +9,13 @@ import 'package:csia/errorPopUp.dart';
 import 'package:csia/regUser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csia/admin.dart';
+import 'package:csia/notification_service.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-FirebaseAuth auth = FirebaseAuth.instance;
+final FirebaseAuth auth = FirebaseAuth.instance;
 bool admin = false; 
-FirebaseFirestore firestore = FirebaseFirestore.instance; 
-CollectionReference admins = firestore.collection('admins');
+final FirebaseFirestore firestore = FirebaseFirestore.instance; 
+final CollectionReference admins = firestore.collection('admins');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
@@ -21,6 +23,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  NotificationService.init(); 
   runApp(MyApp());
 }
 
@@ -114,6 +117,16 @@ class LoginScreen2 extends State<LoginScreen> {
             },
             child: const Text('Need an Account?'),
           ),
+          TextButton(
+            onPressed: () { 
+              NotificationService.showNotification(
+                title: 'test1',
+                body: 'test2'
+              );
+            },
+
+            child: const Text('Tester')
+          ),
           Container(
             height: 50,
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -125,13 +138,11 @@ class LoginScreen2 extends State<LoginScreen> {
                     email: nameControl.text, 
                     password: passControl.text
                   );
-                  admins.add({
-                    'Email': nameControl.text 
-                  }); 
                   bool isAdmin = false; 
                   admins.get().then((QuerySnapshot querySnapshot) {
                     querySnapshot.docs.forEach((doc) {
                       if (doc.data().toString().contains('Email')) {
+                        print(doc['Email']);
                         if (doc['Email'] == nameControl.text) 
                           isAdmin = true;
                       }
@@ -149,7 +160,6 @@ class LoginScreen2 extends State<LoginScreen> {
                     createError(context, 'Wrong password provided');
                   } else {
                     createError(context, e.code); 
-                    // comment
                   }
                 }
               },

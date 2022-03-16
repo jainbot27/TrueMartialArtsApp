@@ -1,7 +1,7 @@
 import 'package:csia/main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'package:csia/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ForgotPassword extends StatelessWidget {
@@ -44,11 +44,7 @@ class ForgotPassword extends StatelessWidget {
             child: ElevatedButton(
               child: const Text('Enter Email'),
               onPressed: () {
-                print(email.text);
-                auth.authStateChanges().listen((User? user) {
-                  if (user == null) print('User is currently signed out'); 
-                  else print('User is signed in');
-                })    ;
+                auth.sendPasswordResetEmail(email: email.text);
               },
             )
           ),
