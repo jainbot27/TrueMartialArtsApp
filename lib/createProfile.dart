@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'main.dart';
-import 'errorPopUp.dart';
+import 'package:csia/main.dart';
+import 'package:csia/errorPopUp.dart';
 
 class createProfile extends StatelessWidget {
 
@@ -12,8 +11,9 @@ class createProfile extends StatelessWidget {
 
   @override 
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
+    return Scaffold(
+      appBar: AppBar(title: Text('New Account')),
+      body: Container(
         margin: const EdgeInsets.all(10), 
         child: ListView(
           children: <Widget>[

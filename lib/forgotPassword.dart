@@ -9,9 +9,10 @@ class ForgotPassword extends StatelessWidget {
   @override
   ForgotPassword({Key? key}) : super(key: key); 
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(0, 280, 0, 0),
+    return Scaffold(
+      appBar: AppBar(title: Text('Password Reset')),
+      body: Container(
+        margin: const EdgeInsets.fromLTRB(0, 240, 0, 0),
         // alignment: Alignment.center,
         child: ListView(
           children: <Widget>[

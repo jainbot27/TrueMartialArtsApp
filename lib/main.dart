@@ -117,16 +117,16 @@ class LoginScreen2 extends State<LoginScreen> {
             },
             child: const Text('Need an Account?'),
           ),
-          TextButton(
-            onPressed: () { 
-              NotificationService.showNotification(
-                title: 'test1',
-                body: 'test2'
-              );
-            },
+          // TextButton(
+          //   onPressed: () { 
+          //     NotificationService.showNotification(
+          //       title: 'test1',
+          //       body: 'test2'
+          //     );
+          //   },
 
-            child: const Text('Tester')
-          ),
+          //   child: const Text('Tester')
+          // ),
           Container(
             height: 50,
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -142,9 +142,9 @@ class LoginScreen2 extends State<LoginScreen> {
                   admins.get().then((QuerySnapshot querySnapshot) {
                     querySnapshot.docs.forEach((doc) {
                       if (doc.data().toString().contains('Email')) {
-                        print(doc['Email']);
-                        if (doc['Email'] == nameControl.text) 
+                        if (doc['Email'] == nameControl.text) {
                           isAdmin = true;
+                        }
                       }
                     });
                     if (isAdmin) {
