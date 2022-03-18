@@ -1,4 +1,5 @@
 import 'package:csia/createProfile.dart';
+import 'package:csia/tester.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:csia/firebase_options.dart';
@@ -6,11 +7,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:csia/forgotPassword.dart'; 
 import 'package:csia/createProfile.dart';
 import 'package:csia/errorPopUp.dart';
-import 'package:csia/regUser.dart';
+import 'package:csia/mainScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csia/admin.dart';
 import 'package:csia/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:timezone/data/latest.dart' as tz; 
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 bool admin = false; 
@@ -20,17 +22,19 @@ final CollectionReference admins = firestore.collection('admins');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
   // Firebase.initializeApp(); 
+  // tz.initalizeTimeZone(); 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  NotificationService.init(); 
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   @override 
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const Scaffold(
         body: const LoginScreen(), 
       ), 
@@ -42,9 +46,23 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key); 
   @override
   State<LoginScreen> createState() => LoginScreen2(); 
+
 }
 
 class LoginScreen2 extends State<LoginScreen> {
+  void initState() {
+    super.initState(); 
+    NotificationService.init(); 
+    listenNotifs(); 
+  }
+
+  void listenNotifs() => NotificationService.onNotif.stream.listen(onClickedNotification); 
+
+  void onClickedNotification(String? payload) => 
+    Navigator.of(context).push(MaterialPageRoute(
+      // builder: (context) => SecondPage(payload: payload), 
+      builder: (context) => Tester(), 
+    ));
   TextEditingController nameControl = TextEditingController(); 
   TextEditingController passControl = TextEditingController(); 
   @override 
