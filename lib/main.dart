@@ -5,15 +5,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:csia/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:csia/forgot_password.dart'; 
-import 'package:csia/create_profile.dart';
 import 'package:csia/error_pop_up.dart';
 import 'package:csia/main_screen_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csia/admin.dart';
 import 'package:csia/notification_service.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart'; 
 import 'package:timezone/data/latest.dart' as tz;
 
 final FirebaseAuth auth = FirebaseAuth.instance;
@@ -137,17 +133,17 @@ class LoginScreen2 extends State<LoginScreen> {
             },
             child: const Text('Need an Account?'),
           ),
-          TextButton(
-            onPressed: () { 
-              NotificationService.showSchedNotif(
-                title: 'test1',
-                body: 'test2',
-                scheduledDate: DateTime.now().add(Duration(seconds: 12)), 
-              );
-            },
+          // TextButton(
+          //   onPressed: () { 
+          //     NotificationService.showSchedNotif(
+          //       title: 'test1',
+          //       body: 'test2',
+          //       scheduledDate: DateTime.now().add(Duration(seconds: 12)), 
+          //     );
+          //   },
 
-            child: const Text('Tester')
-          ),
+          //   child: const Text('Tester')
+          // ),
           Container(
             height: 50,
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
