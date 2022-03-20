@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Event extends StatefulWidget {
-  EventState createState() => EventState();
+class EventList extends StatefulWidget {
+  EventListState createState() => EventListState();
 }
 
-class EventState extends State<Event> {
+class EventListState extends State<EventList> {
   Widget build(BuildContext context) {
     return Material(
       child: Text('yang'),

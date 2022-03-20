@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+
 import 'package:csia/main.dart';
 import 'package:csia/calendar.dart'; 
-import 'package:csia/events.dart'; 
+import 'package:csia/event_list.dart'; 
 
 class HomeScreen extends StatefulWidget {
   @override 
@@ -12,7 +13,7 @@ class HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0; 
   final List _children = [
     Calendar(), 
-    Event(), 
+    EventList(), 
   ];
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class HomeScreenState extends State<HomeScreen> {
             Navigator.of(context).pop();  
           },
         ),
-        title: const Text('Calender of Events DEBUG')
+        title: const Text('Calender of Events')
       ),      
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(

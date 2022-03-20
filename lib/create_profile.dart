@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:csia/main.dart';
-import 'package:csia/errorPopUp.dart';
+import 'package:csia/error_pop_up.dart';
 
 class createProfile extends StatelessWidget {
 
