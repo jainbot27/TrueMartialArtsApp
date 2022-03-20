@@ -12,7 +12,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csia/admin.dart';
 import 'package:csia/notification_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest.dart' as tz; 
+// import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart'; 
+import 'package:timezone/data/latest.dart' as tz;
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 bool admin = false; 
@@ -22,7 +24,7 @@ final CollectionReference admins = firestore.collection('admins');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); 
   // Firebase.initializeApp(); 
-  // tz.initalizeTimeZone(); 
+  tz.initializeTimeZones();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -135,16 +137,17 @@ class LoginScreen2 extends State<LoginScreen> {
             },
             child: const Text('Need an Account?'),
           ),
-          // TextButton(
-          //   onPressed: () { 
-          //     NotificationService.showNotification(
-          //       title: 'test1',
-          //       body: 'test2'
-          //     );
-          //   },
+          TextButton(
+            onPressed: () { 
+              NotificationService.showSchedNotif(
+                title: 'test1',
+                body: 'test2',
+                scheduledDate: DateTime.now().add(Duration(seconds: 12)), 
+              );
+            },
 
-          //   child: const Text('Tester')
-          // ),
+            child: const Text('Tester')
+          ),
           Container(
             height: 50,
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
