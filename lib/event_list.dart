@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:csia/event.dart';
 import 'package:csia/calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:csia/get_doc_name.dart';
+import 'package:csia/button.dart'; 
 
 class EventList extends StatefulWidget {
   EventListState createState() => EventListState();
@@ -25,8 +27,11 @@ Future<List<Event>>? calcAllEvents() async {
   return ret; 
 }
 
+List<bool> toggles = []; 
 class EventListState extends State<EventList> {
   Widget build(BuildContext context) {
+    for (int i = 0; i < toggles.length; i++) 
+      toggles[i] = false; 
     return Scaffold(
       body: FutureBuilder<List<Event>>(
         future: calcAllEvents(), 
@@ -35,11 +40,14 @@ class EventListState extends State<EventList> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
+                Icon icon1 = const Icon(CupertinoIcons.bell);
+                Icon icon2 = const Icon(CupertinoIcons.bell_fill);
+                bool current = false; 
                 return Card(
                   child: ListTile(
                     onTap: () {},
                     title: Text(snapshot.data![index].name), 
-                  )
+                    leading: Button()                  )
                 );
               },
             );
