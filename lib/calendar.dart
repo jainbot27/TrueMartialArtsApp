@@ -59,26 +59,6 @@ class CalendarState extends State<Calendar> {
     );
   }
 
-  // Widget foo() {
-  //   print('FOO'); 
-  //   return Material(
-
-  //   );
-  // }
-
-  // Widget huh() {
-  //   print('YANG'); 
-  //   // for (int i = 0; i < allEvents.length; i++) {
-  //   //   print(allEvents[i].description);
-  //   // }
-  //   // return Text('huh'); 
-  //   print(getDocName(_selectedDay)); 
-  //   print(allEvents.length); 
-  //   // if (allEvents.length == 0)
-  //   //   return Material(); 
-  //   return Text('huh');
-  // }
-
   List<Event> reset() {
     List<Event> allEvents = []; 
     print('begin reset'); 

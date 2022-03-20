@@ -1,5 +1,4 @@
 import 'package:csia/create_profile.dart';
-import 'package:csia/tester.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:csia/firebase_options.dart';
@@ -59,7 +58,7 @@ class LoginScreen2 extends State<LoginScreen> {
   void onClickedNotification(String? payload) => 
     Navigator.of(context).push(MaterialPageRoute(
       // builder: (context) => SecondPage(payload: payload), 
-      builder: (context) => Tester(), 
+      builder: (context) => LoginScreen(), 
     ));
   TextEditingController nameControl = TextEditingController(); 
   TextEditingController passControl = TextEditingController(); 
