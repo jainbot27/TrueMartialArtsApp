@@ -1,4 +1,4 @@
-name: csia
+name: TMA
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -43,6 +43,7 @@ dependencies:
   rxdart: ^0.27.3
   timezone: ^0.8.0
   provider: ^6.0.2
+  tuple: ^2.0.0
 
 dev_dependencies:
   flutter_test:

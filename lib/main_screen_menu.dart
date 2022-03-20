@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import 'package:csia/main.dart';
-import 'package:csia/calendar.dart'; 
-import 'package:csia/event_list.dart'; 
+import 'package:TMA/main.dart';
+import 'package:TMA/event_list.dart'; 
 
 class HomeScreen extends StatefulWidget {
   @override 
@@ -12,7 +11,6 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0; 
   final List _children = [
-    Calendar(), 
     EventList(), 
   ];
   @override
@@ -28,21 +26,7 @@ class HomeScreenState extends State<HomeScreen> {
         ),
         title: const Text('Calender of Events')
       ),      
-      body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex, 
-        onTap: onTabTapped, 
-        items: [
-          BottomNavigationBarItem(
-            icon: new Icon(Icons.calendar_month_sharp),
-            label: 'Calendar',
-          ),
-          BottomNavigationBarItem(
-            icon:  new Icon(Icons.list),
-            label: 'Events'
-          ),
-        ],
-      ),
+      body: EventList(),     
     );
   }
   void onTabTapped(int index) {
