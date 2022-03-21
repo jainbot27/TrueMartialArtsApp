@@ -45,6 +45,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreen2 extends State<LoginScreen> {
+  @override 
   void initState() {
     super.initState();
     NotificationService.init();
@@ -87,7 +88,7 @@ class LoginScreen2 extends State<LoginScreen> {
                 controller: nameControl,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'User Name',
+                  labelText: 'Email',
                 ),
               )),
 

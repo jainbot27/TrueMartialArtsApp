@@ -29,14 +29,10 @@ Future<List<Event>>? calcAllEvents() async {
       }
     });
   });
-  print(ret.length);
   ret.sort((fir, sec) => fir.time.compareTo(sec.time));
   return ret;
 }
 
-DateTime public = DateTime.now();
-String title = '';
-String body = '';
 
 class EventListState extends State<EventList> {
   Widget build(BuildContext context) {
@@ -48,12 +44,10 @@ class EventListState extends State<EventList> {
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  Icon icon1 = const Icon(CupertinoIcons.bell);
-                  Icon icon2 = const Icon(CupertinoIcons.bell_fill);
-                  bool current = false;
-                  public = snapshot.data![index].time;
-                  body = snapshot.data![index].description;
-                  title = snapshot.data![index].name;
+                  DateTime public = snapshot.data![index].time;
+                  String body = snapshot.data![index].description;
+                  String title = snapshot.data![index].name;
+                  print(public);
                   return Card(
                       child: ListTile(
                           onTap: () {},
@@ -63,7 +57,7 @@ class EventListState extends State<EventList> {
                               public
                                   .toString()
                                   .substring(0, public.toString().length - 7)),
-                          leading: Button()));
+                          leading: Button(title, body, public)));
                 },
               );
             } else {

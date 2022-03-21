@@ -10,20 +10,36 @@ import 'package:TMA/main.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Button extends StatefulWidget {
+  late String title, body;
+  late DateTime public;
+  Button(String title, String body, DateTime public) {
+    this.title = title;
+    this.body = body;
+    this.public = public;
+    print(title);
+  }
   @override
-  _ButtonState createState() => _ButtonState();
+  _ButtonState createState() => _ButtonState(title, body, public);
 }
 
-Icon icon1 = Icon(CupertinoIcons.bell);
-Icon icon2 = Icon(CupertinoIcons.bell_fill);
+const Icon iconNoNotif = Icon(CupertinoIcons.bell);
+const Icon iconYesNotif = Icon(CupertinoIcons.bell_fill);
 Map<Tuple3<String, String, DateTime>, int> map = new Map();
 
 class _ButtonState extends State<Button> {
-  List<Icon> lst = [icon1, icon2];
+  List<Icon> lst = [iconNoNotif, iconYesNotif];
   int idx = 0;
+  late String title, body;
+  late DateTime public;
+  _ButtonState(String title, String body, DateTime public) {
+    this.title = title;
+    this.body = body;
+    this.public = public;
+  }
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
+        print('foo');
         setState(() {
           int id = 0;
           if (map.containsKey(Tuple3(title, body, public))) {
@@ -42,8 +58,11 @@ class _ButtonState extends State<Button> {
             });
           }
           if (idx == 0) {
+            print(public);
+            print('foo');
             NotificationService.showSchedNotif(
                 title: title, body: body, scheduledDate: public, id: id);
+            // NotificationService.showSchedNotif(body: 'test1', title: 'test69', scheduledDate: DateTime.now().add(Duration(seconds: 6)) );
           } else {
             NotificationService.cancel(id);
           }
@@ -54,5 +73,3 @@ class _ButtonState extends State<Button> {
     );
   }
 }
-// Icon icon1 = const Icon(CupertinoIcons.bell);
-// Icon icon2 = const Icon(CupertinoIcons.bell_fill);
