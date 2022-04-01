@@ -44,6 +44,7 @@ dependencies:
   timezone: ^0.8.0
   provider: ^6.0.2
   tuple: ^2.0.0
+  dcdg: ^4.0.1
 
 dev_dependencies:
   flutter_test:

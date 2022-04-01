@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:TMA/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:TMA/get_doc_name.dart';
 import 'package:TMA/button.dart';
 import 'package:TMA/main.dart';
+// import 'package:TMA/counter.dart';
 
 CollectionReference events = firestore.collection('events');
 class EventList extends StatefulWidget {
@@ -12,7 +12,7 @@ class EventList extends StatefulWidget {
 }
 
 Future<List<Event>>? calcAllEvents() async {
-  List<Event> ret = [];
+  List<Event> allRelevantEvents = [];
   await events.get().then((QuerySnapshot querySnapshot) {
     querySnapshot.docs.forEach((doc) {
       if (doc.data().toString().contains('Time')) {
@@ -20,7 +20,8 @@ Future<List<Event>>? calcAllEvents() async {
         DateTime ndt =
             DateTime(dt.year, dt.month, dt.day, doc['Hour'], doc['Minute']);
         if (ndt.compareTo(DateTime.now()) != -1) {
-          ret.add(Event(
+          // weeding out events that are not useful to us 
+          allRelevantEvents.add(Event(
               description: doc['Description'],
               name: doc['Name'],
               id: 0,
@@ -29,15 +30,24 @@ Future<List<Event>>? calcAllEvents() async {
       }
     });
   });
-  ret.sort((fir, sec) => fir.time.compareTo(sec.time));
-  return ret;
+  // implementation of bubble sort
+  for (int iterations = 0; iterations < allRelevantEvents.length; iterations++) {
+    for (int pos = 0; pos < allRelevantEvents.length - 1; pos++) {
+      if (allRelevantEvents[pos].time.compareTo(allRelevantEvents[pos + 1].time) == 1) {
+        Event e = allRelevantEvents[pos]; 
+        allRelevantEvents[pos] = allRelevantEvents[pos + 1]; 
+        allRelevantEvents[pos + 1] = e; 
+      }
+    }
+  }
+  return allRelevantEvents;
 }
 
 
 class EventListState extends State<EventList> {
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<List<Event>>(
+    return Material(
+      child: FutureBuilder<List<Event>>(
           future: calcAllEvents(),
           builder: (BuildContext context, AsyncSnapshot<List<Event>> snapshot) {
             if (snapshot.hasData) {
@@ -47,10 +57,9 @@ class EventListState extends State<EventList> {
                   DateTime public = snapshot.data![index].time;
                   String body = snapshot.data![index].description;
                   String title = snapshot.data![index].name;
-                  print(public);
                   return Card(
-                      child: ListTile(
-                          onTap: () {},
+                      child: ListTile( // Each inidivual member of my list
+                          // display info about the event
                           title: Text(snapshot.data![index].name),
                           subtitle: Text(snapshot.data![index].description +
                               "\n" +
@@ -61,7 +70,7 @@ class EventListState extends State<EventList> {
                 },
               );
             } else {
-              return SizedBox(
+              return const SizedBox(
                 width: 60,
                 height: 60,
                 child: CircularProgressIndicator(),

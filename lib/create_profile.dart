@@ -11,7 +11,7 @@ class createProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('New Account')),
+        appBar: AppBar(title: const Text('New Account')),
         body: Container(
             margin: const EdgeInsets.all(10),
             child: ListView(
@@ -64,12 +64,17 @@ class createProfile extends StatelessWidget {
                               .createUserWithEmailAndPassword(
                                   email: controllerEmail.text,
                                   password: controllerPassword.text);
+                          controllerEmail.clear();
+                          controllerPassword.clear();
+                          controllerPassword2.clear();
                         } on FirebaseAuthException catch (e) {
                           if (e.code == 'weak-password') {
                             createError(context, 'Password is too weak');
                           } else if (e.code == 'email-already-in-use') {
                             createError(context,
                                 'The account already exists for that email');
+                          } else {
+                            createError(context, e.code);
                           }
                         }
                       }

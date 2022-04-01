@@ -45,6 +45,8 @@ class ForgotPassword extends StatelessWidget {
                     child: const Text('Enter Email'),
                     onPressed: () {
                       auth.sendPasswordResetEmail(email: email.text);
+                      email.clear(); 
+                      Navigator.of(context).pop();
                     },
                   )),
             ])));

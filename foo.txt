@@ -1,0 +1,143 @@
+@startuml
+set namespaceSeparator ::
+
+class "TMA::admin.dart::AdminScreen" {
+  +AdminScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "TMA::admin.dart::AdminScreen"
+
+class "TMA::admin.dart::AdminScreenState" {
+  +TextEditingController name
+  +TextEditingController description
+  +TextEditingController year
+  +TextEditingController month
+  +TextEditingController day
+  +TextEditingController hour
+  +TextEditingController minute
+  +Widget build()
+}
+
+"TMA::admin.dart::AdminScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "TMA::admin.dart::AdminScreenState"
+
+class "TMA::forgot_password.dart::ForgotPassword" {
+  +TextEditingController email
+  +Widget build()
+}
+
+"TMA::forgot_password.dart::ForgotPassword" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "TMA::forgot_password.dart::ForgotPassword"
+
+class "TMA::create_profile.dart::createProfile" {
+  +TextEditingController controllerEmail
+  +TextEditingController controllerPassword
+  +TextEditingController controllerPassword2
+  +Widget build()
+}
+
+"TMA::create_profile.dart::createProfile" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "TMA::create_profile.dart::createProfile"
+
+class "TMA::button.dart::Button" {
+  +String title
+  +String body
+  +DateTime public
+  +_ButtonState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "TMA::button.dart::Button"
+
+class "TMA::button.dart::_ButtonState" {
+  +List<Icon> lst
+  +int idx
+  +String title
+  +String body
+  +DateTime public
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "TMA::button.dart::_ButtonState"
+
+class "TMA::firebase_options.dart::DefaultFirebaseOptions" {
+  {static} +FirebaseOptions web
+  {static} +FirebaseOptions android
+  {static} +FirebaseOptions ios
+  {static} +FirebaseOptions currentPlatform
+}
+
+"TMA::firebase_options.dart::DefaultFirebaseOptions" o-- "firebase_core_platform_interface::firebase_core_platform_interface.dart::FirebaseOptions"
+
+class "TMA::main.dart::MyApp" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "TMA::main.dart::MyApp"
+
+class "TMA::main.dart::LoginScreen" {
+  +State<LoginScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "TMA::main.dart::LoginScreen"
+
+class "TMA::main.dart::LoginScreen2" {
+  +TextEditingController nameControl
+  +TextEditingController passControl
+  +void initState()
+  +void listenNotifs()
+  +void onClickedNotification()
+  +Widget build()
+}
+
+"TMA::main.dart::LoginScreen2" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "TMA::main.dart::LoginScreen2"
+
+class "TMA::event_list.dart::EventList" {
+  +EventListState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "TMA::event_list.dart::EventList"
+
+class "TMA::event_list.dart::EventListState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "TMA::event_list.dart::EventListState"
+
+class "TMA::notification_service.dart::NotificationService" {
+  {static} -FlutterLocalNotificationsPlugin _notifications
+  {static} +BehaviorSubject<String?> onNotif
+  {static} -Future<dynamic> _notificationDetails()
+  {static} +Future<dynamic> init()
+  {static} +Future<dynamic> showNotification()
+  {static} +void showSchedNotif()
+  {static} +void cancel()
+}
+
+"TMA::notification_service.dart::NotificationService" o-- "flutter_local_notifications::src::flutter_local_notifications_plugin.dart::FlutterLocalNotificationsPlugin"
+"TMA::notification_service.dart::NotificationService" o-- "rxdart::src::subjects::behavior_subject.dart::BehaviorSubject<String>"
+
+class "TMA::event.dart::Event" {
+  +int id
+  +String name
+  +DateTime time
+  +String description
+}
+
+class "TMA::main_screen_menu.dart::HomeScreen" {
+  +HomeScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "TMA::main_screen_menu.dart::HomeScreen"
+
+class "TMA::main_screen_menu.dart::HomeScreenState" {
+  -int _currentIndex
+  -List<dynamic> _children
+  +Widget build()
+  +void onTabTapped()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "TMA::main_screen_menu.dart::HomeScreenState"
+
+
+@enduml

@@ -1,12 +1,12 @@
 import 'package:TMA/create_profile.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:TMA/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:TMA/forgot_password.dart';
 import 'package:TMA/error_pop_up.dart';
 import 'package:TMA/main_screen_menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:TMA/admin.dart';
 import 'package:TMA/notification_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -60,7 +60,7 @@ class LoginScreen2 extends State<LoginScreen> {
         // builder: (context) => SecondPage(payload: payload),
         builder: (context) => LoginScreen(),
       ));
-  TextEditingController nameControl = TextEditingController();
+  TextEditingController emailTextController = TextEditingController();
   TextEditingController passControl = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class LoginScreen2 extends State<LoginScreen> {
           Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: nameControl,
+                controller: emailTextController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
@@ -140,20 +140,28 @@ class LoginScreen2 extends State<LoginScreen> {
               child: ElevatedButton(
                 child: const Text('Login'),
                 onPressed: () async {
+                  if (emailTextController.text.length == 0 || passControl.text.length == 0) {
+                    createError(context, 'You haven\'t entered text into one/both fields');
+                    return;
+                  }
                   try {
                     UserCredential userCredential = await FirebaseAuth.instance
                         .signInWithEmailAndPassword(
-                            email: nameControl.text,
+                            email: emailTextController.text,
                             password: passControl.text);
                     bool isAdmin = false;
-                    admins.get().then((QuerySnapshot querySnapshot) {
+                    admins.get().then((QuerySnapshot querySnapshot) {// access admin document
                       querySnapshot.docs.forEach((doc) {
                         if (doc.data().toString().contains('Email')) {
-                          if (doc['Email'] == nameControl.text) {
+                          if (doc['Email'] == emailTextController.text) { 
+                            // checks if the current name is equal to that admin, 
+                            // if so, sets a flag denoting that it is
                             isAdmin = true;
                           }
                         }
                       });
+                      passControl.clear(); 
+                      emailTextController.clear(); 
                       if (isAdmin) {
                         Navigator.push(
                             context,

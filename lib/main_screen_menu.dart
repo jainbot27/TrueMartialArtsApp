@@ -3,7 +3,6 @@ import 'package:table_calendar/table_calendar.dart';
 
 import 'package:TMA/main.dart';
 import 'package:TMA/event_list.dart'; 
-
 class HomeScreen extends StatefulWidget {
   @override 
   HomeScreenState createState() => HomeScreenState();
@@ -24,9 +23,15 @@ class HomeScreenState extends State<HomeScreen> {
             Navigator.of(context).pop();  
           },
         ),
-        title: const Text('Calender of Events')
+        title: const Text('List of Upcoming events')
       ),      
-      body: EventList(),     
+      // body: ListView(
+      //   children: <Widget>[
+      //     Container(padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+      //     child: Text('Click on the bell to get a reminder for a class, or the toggle to RSVP')),
+          body: EventList(),     
+      //   ],
+      // )
     );
   }
   void onTabTapped(int index) {

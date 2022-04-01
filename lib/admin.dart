@@ -124,11 +124,17 @@ class AdminScreenState extends State<AdminScreen> {
                   events.add({
                     'Hour': Hour,
                     'Minute': Minute,
-                    // Time: getDocName(DateTime(: Year, Month: Month, Day: Day))
                     'Time': getDocName(DateTime(Year, Month, Day)),
                     'Name': name.text,
                     'Description': description.text,
                   });
+                  name.clear();
+                  description.clear();
+                  year.clear();
+                  month.clear();
+                  day.clear();
+                  hour.clear();
+                  minute.clear(); 
                 } on FormatException catch (e) {
                   createError(context,
                       'You most likely inputted a non-integer into the time boxes');

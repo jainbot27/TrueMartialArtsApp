@@ -16,7 +16,6 @@ class Button extends StatefulWidget {
     this.title = title;
     this.body = body;
     this.public = public;
-    print(title);
   }
   @override
   _ButtonState createState() => _ButtonState(title, body, public);
@@ -24,7 +23,7 @@ class Button extends StatefulWidget {
 
 const Icon iconNoNotif = Icon(CupertinoIcons.bell);
 const Icon iconYesNotif = Icon(CupertinoIcons.bell_fill);
-Map<Tuple3<String, String, DateTime>, int> map = new Map();
+Map<Tuple3<String, String, DateTime>, int> map = Map();
 
 class _ButtonState extends State<Button> {
   List<Icon> lst = [iconNoNotif, iconYesNotif];
@@ -39,7 +38,6 @@ class _ButtonState extends State<Button> {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        print('foo');
         setState(() {
           int id = 0;
           if (map.containsKey(Tuple3(title, body, public))) {
@@ -53,15 +51,16 @@ class _ButtonState extends State<Button> {
                 .get()
                 .then((QuerySnapshot querySnapshot) {
               querySnapshot.docs.forEach((doc) {
-                id = doc['cnt'];
+                if (doc['cnt'] > id) 
+                  id = doc['cnt']; 
               });
             });
+            id++;
+            firestore.collection('counter').add({'cnt': id}); 
           }
           if (idx == 0) {
-            print(public);
-            print('foo');
             NotificationService.showSchedNotif(
-                title: title, body: body, scheduledDate: public, id: id);
+                title: title, body: body, scheduledDate: public.subtract(const Duration(minutes: 60)), id: id);
             // NotificationService.showSchedNotif(body: 'test1', title: 'test69', scheduledDate: DateTime.now().add(Duration(seconds: 6)) );
           } else {
             NotificationService.cancel(id);
