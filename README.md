@@ -1,1 +1,1 @@
-Not officially associated with True Martial Arts
+Not officially associated with True Martial Arts. 
